@@ -57,6 +57,11 @@ namespace OpAMPDemo
                 Data[$"Logging:LogLevel:{logLevel.logger}"] = level;
             }
 
+            if (config.sampleRatio.HasValue)
+            {
+                Data["OpAmp:SampleRatio"] = config.sampleRatio.ToString();
+            }
+
             OnReload();
         }
 
@@ -78,5 +83,5 @@ public class OpAmpConfig
 
     public LogLevel[] logLevels { get; set; }
 
-    public double sampleRatio { get; set; }
+    public double? sampleRatio { get; set; }
 }

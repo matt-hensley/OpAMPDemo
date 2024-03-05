@@ -7,7 +7,9 @@ builder.Configuration.Add<OpAmpConfigSource>(src =>
 {
     src.ServiceName = "serviceA";
 });
+builder.Services.Configure<OpAmpConfig>(builder.Configuration.GetSection("OpAmp"));
 builder.Services.AddOpenTelemetry().WithTracing(tracing => {
+    tracing.SetSampler<OpAmpSampler>();
     tracing.AddAspNetCoreInstrumentation();
     tracing.AddConsoleExporter();
 });
