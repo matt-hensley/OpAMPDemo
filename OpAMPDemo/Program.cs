@@ -1,10 +1,15 @@
 using OpAMPDemo;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("logging.json", optional: false, reloadOnChange: true);
 builder.Configuration.Add<OpAmpConfigSource>(src =>
 {
     src.ServiceName = "serviceA";
+});
+builder.Services.AddOpenTelemetry().WithTracing(tracing => {
+    tracing.AddAspNetCoreInstrumentation();
+    tracing.AddConsoleExporter();
 });
 
 builder.Services.AddControllers();
